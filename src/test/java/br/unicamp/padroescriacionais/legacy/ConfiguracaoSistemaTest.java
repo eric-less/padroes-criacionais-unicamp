@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ConfiguracaoSistemaTest {
 
-    // --- Testes de comportamento basico ---
-
     @Test
     void deveCriarConfiguracaoComValoresInformados() {
         ConfiguracaoSistema config = new ConfiguracaoSistema(
@@ -49,12 +47,8 @@ class ConfiguracaoSistemaTest {
         assertEquals("/novo/diretorio", config.getDiretorioExportacao());
     }
 
-    // --- Testes que evidenciam o problema de multiplas instancias ---
-
     @Test
     void duasInstanciasIndependentesPodemTerAmbientesDiferentes() {
-        // Este teste demonstra o risco: duas instancias criadas em partes diferentes
-        // do sistema podem carregar valores distintos, causando comportamento inconsistente.
         ConfiguracaoSistema configDev = new ConfiguracaoSistema("Empresa", "DEV", "/tmp", true);
         ConfiguracaoSistema configProd = new ConfiguracaoSistema("Empresa", "PROD", "/exports", false);
 
@@ -65,19 +59,14 @@ class ConfiguracaoSistemaTest {
 
     @Test
     void alteracaoEmUmaInstanciaNaoAfetaOutra() {
-        // Mais uma evidencia: modificar uma instancia nao altera as demais.
-        // Se o sistema dependesse de uma unica configuracao compartilhada,
-        // isso nao seria possivel.
         ConfiguracaoSistema config1 = new ConfiguracaoSistema("Empresa", "DEV", "/tmp", false);
         ConfiguracaoSistema config2 = new ConfiguracaoSistema("Empresa", "DEV", "/tmp", false);
 
         config1.setAmbiente("PROD");
 
         assertEquals("PROD", config1.getAmbiente());
-        assertEquals("DEV", config2.getAmbiente()); // config2 nao foi alterada
+        assertEquals("DEV", config2.getAmbiente());
     }
-
-    // --- Teste do ConfiguracaoService ---
 
     @Test
     void configuracaoServiceDeveRetornarConfiguracaoNaoNula() {

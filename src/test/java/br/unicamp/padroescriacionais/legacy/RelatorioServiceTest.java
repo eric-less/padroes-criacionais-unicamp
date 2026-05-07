@@ -18,8 +18,6 @@ class RelatorioServiceTest {
         service = new RelatorioService();
     }
 
-    // --- Criacao de relatorios ---
-
     @Test
     void deveCriarRelatorioDeVendas() {
         Relatorio relatorio = service.criarRelatorio(TipoRelatorio.VENDAS);
@@ -60,8 +58,6 @@ class RelatorioServiceTest {
             assertFalse(relatorio.getConteudo().isBlank(), "Conteudo vazio para tipo: " + tipo);
         }
     }
-
-    // --- Geracao por formato ---
 
     @Test
     void deveGerarConteudoPdfNaoVazio() {
